@@ -1,0 +1,107 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.8.+'
+    }
+}
+
+apply plugin: 'android-library'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'com.mcxiaoke.volley:library:1.0.0'
+    compile 'com.squareup.dagger:dagger:1.2.1'
+    compile 'com.squareup.dagger:dagger-compiler:1.2.1'
+    compile 'com.wmbest.barstool:barstool:1.1.1@aar'
+}
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion '19.0.1'
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
+    }
+
+    defaultConfig {
+        minSdkVersion 9
+        targetSdkVersion 19
+    }
+}
+
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+version = "1.0.0"
+group = "com.vokal.volley"
+
+def deployRepo = sonatypeRepo
+
+/* Uncomment to deploy locally */
+deployRepo = 'file://localhost/tmp/myRepo'
+
+configurations {
+    archives {
+        extendsFrom configurations.default
+    }
+}
+
+signing {
+    required { has("release") && gradle.taskGraph.hasTask("uploadArchives") }
+    sign configurations.archives
+}
+
+uploadArchives {
+    configuration = configurations.archives
+    repositories.mavenDeployer {
+        beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+        repository(url: deployRepo) {
+            authentication(userName: sonatypeUsername,
+                    password: sonatypePassword)
+        }
+
+        pom.project {
+            artifactId 'volley-module'
+            name 'Volley Module'
+            packaging 'aar'
+            description 'A drop in volley module for dagger and barstool'
+            url 'https://github.com/vokalinteractive/VolleyModule'
+
+            scm {
+                url 'scm:git@github.com:vokalinteractive/VolleyModule.git'
+                connection 'scm:git@github.com:vokalinteractive/VolleyModule.git'
+                developerConnection 'scm:git@github.com:vokalinteractive/VolleyModule.git'
+            }
+
+            licenses {
+                license {
+                    name 'Apache Version 2.0'
+                    url 'http://www.apache.org/licenses/'
+                    distribution 'repo'
+                }
+            }
+
+            developers {
+                developer {
+                    id 'wmbest2'
+                    name 'William Best'
+                    email 'wmbest2@gmail.com'
+                }
+            }
+        }
+    }
+}

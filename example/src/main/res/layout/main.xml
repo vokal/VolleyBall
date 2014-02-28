@@ -1,0 +1,19 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <Button
+        android:id="@+id/make_request"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Make Request"
+        />
+    <TextView
+        android:id="@+id/response"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/make_request"
+        />
+</RelativeLayout>
