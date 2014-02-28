@@ -9,7 +9,7 @@ Features
 * Easily Switch between multiple server types on the fly
 * Add Mocks through use of a custom <routes> xml file
 * Simple provides to make fixed object injection easy to replicate in production version
-* Additional [plugin](volleyball-debug/README.md) available for [Barstool] if used
+* [Additional plugin](volleyball-debug/README.md) available for [Barstool] if used
 
 Usage
 ----

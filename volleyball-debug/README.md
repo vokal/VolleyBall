@@ -7,7 +7,7 @@ Example Usage
 
 Create necessary modules for otto bus
 
-You must inject VolleyBallDebug.class with an Otto bus to use it
+You must inject `VolleyBallDebug.class` with an [Otto] bus to use it
 
 ~~~~java
 
