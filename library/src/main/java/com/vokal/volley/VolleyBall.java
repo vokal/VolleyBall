@@ -19,7 +19,7 @@ import static dagger.Provides.Type.SET;
 @Module(
     library=true
 )
-public class VolleyModule {
+public class VolleyBall {
 
     public static final String MOCK = "Mock";
 
@@ -29,7 +29,7 @@ public class VolleyModule {
     public Map<String, String> mServers = new HashMap<String, String>();
     public MockHttpStack mMock;
 
-    public VolleyModule(Context aContext) {
+    public VolleyBall(Context aContext) {
         mContext = aContext.getApplicationContext();
         mVolley = Volley.newRequestQueue(mContext);
     }
@@ -80,8 +80,8 @@ public class VolleyModule {
     }
 
     private static class VolleyDebugger implements Barstool.Plugin {
-        VolleyModule mModule;
-        public VolleyDebugger(VolleyModule aManager) {
+        VolleyBall mModule;
+        public VolleyDebugger(VolleyBall aManager) {
             mModule = aManager;
         }
 
@@ -126,8 +126,8 @@ public class VolleyModule {
     }
 
     public static class ServerChanger {
-        private VolleyModule mModule;
-        public ServerChanger(VolleyModule aManager) {
+        private VolleyBall mModule;
+        public ServerChanger(VolleyBall aManager) {
             mModule = aManager;
         }
 

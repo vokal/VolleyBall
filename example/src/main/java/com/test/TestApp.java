@@ -7,7 +7,7 @@ import android.os.Build;
 import dagger.*;
 import barstool.BarstoolModule;
 
-import com.vokal.volley.VolleyModule;
+import com.vokal.volley.VolleyBall;
 
 public class TestApp extends Application {
 
@@ -17,7 +17,7 @@ public class TestApp extends Application {
     public void onCreate() {
         super.onCreate();
 
-        VolleyModule module = new VolleyModule(this);
+        VolleyBall module = new VolleyBall(this);
         module.addServer("Production", "http://www.google.com/");
         module.addServer("Staging", "http://staging.google.com/");
         module.addMock(R.xml.routes);

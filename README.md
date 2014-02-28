@@ -22,7 +22,7 @@ public class MyApplication {
     public void onCreate() {
         super.onCreate();
 
-        VolleyModule network = new VolleyModule(this);
+        VolleyBall network = new VolleyBall(this);
         network.addServer("Local", "http://10.1.10.176/");
         network.addServer("Staging", "http://staging.myapp.com/")
         network.addServer("Production", "https://www.myapp.com/")
