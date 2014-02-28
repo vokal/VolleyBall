@@ -25,7 +25,7 @@ public class MyApplication {
         VolleyModule network = new VolleyModule(this);
         network.addServer("Local", "http://10.1.10.176/");
         network.addServer("Staging", "http://staging.myapp.com/")
-        network.addServer("Production", https://www.myapp.com/")
+        network.addServer("Production", "https://www.myapp.com/")
         network.addMocks(R.xml.routes);
 
         mObjectGraph = ObjectGraph.create(new MainModule(), network);
