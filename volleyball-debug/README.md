@@ -1,6 +1,6 @@
 Volley Ball Debug Plugin
 ========
-A plugin for use with VolleyBall and Bill Best's [Barstool] toolbar
+A plugin for use with [VolleyBall](../README.md) and Bill Best's [Barstool] toolbar
 
 Example Usage
 ----
@@ -48,3 +48,6 @@ Listen for change callbacks
     Log.d("MyActivity", "New Server: " + aEvent.server);
 }
 ~~~~
+
+[Barstool]: http://www.github.com/wmbest2/Barstool 
+[Otto]: http://square.github.io/otto/ 
