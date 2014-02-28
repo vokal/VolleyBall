@@ -67,7 +67,7 @@ public class VolleyNewsFeedService implements NewsFeedService {
 Notes and Gotchas
 ----
 
-The VolleyModule is not a standalone module, it is indended to be used with
+VolleyBall is not a standalone module, it is indended to be used with
 another module even if it is empty. Because of this you need mark your module
 as incomplete like so.
 
