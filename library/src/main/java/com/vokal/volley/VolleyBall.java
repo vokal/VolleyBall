@@ -9,7 +9,6 @@ import com.android.volley.RequestQueue;
 
 import java.util.*;
 
-import barstool.Barstool;
 import dagger.*;
 
 import com.vokal.volley.mock.MockHttpStack;
@@ -58,10 +57,6 @@ public class VolleyBall {
         return new ServerChanger(this);
     }
 
-    @Provides(type=SET) Barstool.Plugin providesPlugin() {
-        return new VolleyDebugger(this);
-    }
-
     void setServer(String aType) {
         if (aType != null && !aType.equals(mCurrentKey) 
                 && mServers.keySet().contains(aType)) {
@@ -79,52 +74,6 @@ public class VolleyBall {
         return mServers.keySet();
     }
 
-    private static class VolleyDebugger implements Barstool.Plugin {
-        VolleyBall mModule;
-        public VolleyDebugger(VolleyBall aManager) {
-            mModule = aManager;
-        }
-
-        public String getTitle() {
-            return "Network Settings";
-        }
-
-        public View getView(Context aContext, ViewGroup aParent) {
-            LayoutInflater inflater = LayoutInflater.from(aContext);
-            View view = inflater.inflate(R.layout.barstool, aParent, false);
-            Spinner spinner = (Spinner) view.findViewById(R.id.type);
-
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(aContext, android.R.layout.simple_list_item_1);
-            adapter.addAll(mModule.getServerTypes());
-            spinner.setAdapter(adapter);
-            return view;
-        }
-
-        public void bindView(View aView, ObjectGraph aGraph) {
-            int count = 0;
-            for (String i : mModule.getServerTypes()) {
-                if (i.equals(mModule.mCurrentKey)) {
-                    ((Spinner) aView).setSelection(count);
-                    break;
-                }
-                count++;
-            }
-
-            final Spinner spinner = (Spinner) aView;
-            spinner.setOnItemSelectedListener(
-                new AdapterView.OnItemSelectedListener() {
-                    public void onItemSelected(AdapterView<?> parent, View view, 
-                        int pos, long id) {
-                        mModule.setServer((String) spinner.getAdapter().getItem(pos));
-                    }
-
-                    public void onNothingSelected(AdapterView<?> parent) {
-                        // Another interface callback
-                    }
-                });
-        }
-    }
-
     public static class ServerChanger {
         private VolleyBall mModule;
         public ServerChanger(VolleyBall aManager) {
@@ -137,6 +86,10 @@ public class VolleyBall {
 
         public void changeServer(String aKey) {
             mModule.setServer(aKey);
+        }
+
+        public String currentServer() {
+            return mModule.mCurrentKey;
         }
 
         public Set<String> getServerTypes() {

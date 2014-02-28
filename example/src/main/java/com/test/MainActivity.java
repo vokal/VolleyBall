@@ -13,7 +13,9 @@ import butterknife.*;
 
 import com.android.volley.RequestQueue;
 import com.vokal.volley.BaseUrl;
-import com.vokal.volley.VolleyBall.ServerChanger;
+import com.vokal.volley.VolleyBallDebug;
+
+import com.squareup.otto.*;
 
 import com.android.volley.*;
 import com.android.volley.toolbox.*;
@@ -26,9 +28,10 @@ public class MainActivity extends ActionBarActivity {
 
     @InjectView(R.id.response) TextView mResponse;
 
+    @Inject Bus mBus;
+
     @Inject @BaseUrl String mBase;
     @Inject RequestQueue mVolley;
-    @Inject ServerChanger mChanger;
 
     @Override
     public void onCreate(Bundle aState) {
@@ -41,9 +44,20 @@ public class MainActivity extends ActionBarActivity {
         Barstool.with(((TestApp) getApplication()).graph()).wrap(this);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        mBus.register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mBus.unregister(this);
+    }
+
     @OnClick(R.id.make_request)
     public void request() {
-        ((TestApp) getApplication()).graph().inject(this);
         JsonObjectRequest req = new JsonObjectRequest(mBase + "my/request/test?p=1", null,
             new Response.Listener<JSONObject>() {
                 @Override
@@ -62,5 +76,12 @@ public class MainActivity extends ActionBarActivity {
                 }
             });
         mVolley.add(req);
+    }
+
+    @Subscribe 
+    public void onServerChanged(VolleyBallDebug.Changed aEvent) {
+        mResponse.setText("New Server: " + aEvent.server);
+        // Maybe save setting?
+        ((TestApp) getApplication()).graph().inject(this);
     }
 }

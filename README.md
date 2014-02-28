@@ -1,7 +1,7 @@
 Volley Ball
 ========
 
-A drop-in Volley module for use with Square's [Dagger](http://square.github.io/dagger) and Bill Best's [Barstool] toolbar
+A drop-in Volley module for use with Square's [Dagger](http://square.github.io/dagger) 
 
 Features
 ----
@@ -9,7 +9,7 @@ Features
 * Easily Switch between multiple server types on the fly
 * Add Mocks through use of a custom <routes> xml file
 * Simple provides to make fixed object injection easy to replicate in production version
-* Automatically adds itself to [Barstool] if used
+* Additional [plugin](volleyball-debug/README.md) available for [Barstool] if used
 
 Usage
 ----
