@@ -44,7 +44,7 @@ android {
 apply plugin: 'maven'
 apply plugin: 'signing'
 
-version = "1.0.0"
+version = "1.1.1"
 group = "com.vokalinteractive"
 
 def deployRepo = sonatypeRepo

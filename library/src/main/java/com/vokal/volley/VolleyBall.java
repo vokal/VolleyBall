@@ -113,7 +113,8 @@ public class VolleyBall {
     public static class EnvMap extends HashMap<String, String> {}
 
     public static class MockMap extends EnvMap {
-        public String get(String aKey) {
+        @Override
+        public String get(Object aKey) {
             return MOCK_BASE;
         }
     }
