@@ -2,6 +2,8 @@ Volley Ball Debug Plugin
 ========
 A plugin for use with [VolleyBall](../README.md) and Bill Best's [Barstool] toolbar
 
+![Imgur](http://i.imgur.com/tkRzl7Ol.png)
+
 Example Usage
 ----
 
