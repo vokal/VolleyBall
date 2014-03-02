@@ -13,6 +13,7 @@ import barstool.*;
 
 import com.vokal.volley.VolleyBall;
 import com.vokal.volley.VolleyBallDebug;
+import com.vokal.volley.VolleyBallPlugin;
 
 public class TestApp extends Application {
 
@@ -23,8 +24,8 @@ public class TestApp extends Application {
         super.onCreate();
 
         VolleyBall module = new VolleyBall(this);
-        module.addServer("Production", "http://www.google.com/");
-        module.addServer("Staging", "http://staging.google.com/");
+        module.forEnv("Production").addServer("http://www.google.com/");
+        module.forEnv("Staging").addServer("http://staging.google.com/");
         module.addMock(R.xml.routes);
 
         mObjectGraph = ObjectGraph.create(new DummyModule(), new VolleyBallPlugin(), module);

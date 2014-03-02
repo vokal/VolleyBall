@@ -20,12 +20,14 @@ import static dagger.Provides.Type.SET;
 )
 public class VolleyBall {
 
+    public static final String DEFAULT_URL = "default_url";
+    public static final String MOCK_BASE = "http://mock/";
     public static final String MOCK = "Mock";
 
     public Context mContext;
     public RequestQueue mVolley;
     public String mCurrentKey;
-    public Map<String, String> mServers = new HashMap<String, String>();
+    public Map<String, EnvMap> mEnvironments = new HashMap<String, EnvMap>();
     public MockHttpStack mMock;
 
     public VolleyBall(Context aContext) {
@@ -33,33 +35,48 @@ public class VolleyBall {
         mVolley = Volley.newRequestQueue(mContext);
     }
 
-    public void addServer(String aKey, String aBase) {
-        mServers.put(aKey, aBase);
+    public EnvBuilder forEnv(String aKey) {
+        EnvBuilder builder = new EnvBuilder();
+
+        if (!mEnvironments.containsKey(aKey)) {
+            EnvMap map = new EnvMap();
+            builder.map = map;
+            mEnvironments.put(aKey, map);
+        } else {
+            builder.map = mEnvironments.get(aKey);
+        }
+
         if (mCurrentKey == null) {
             mCurrentKey = aKey;
         }
+
+        return builder;
     }
 
     public void addMock(int aRoutesXml) {
-        mServers.put(MOCK, "http://mock/");
+        mEnvironments.put(MOCK, new MockMap());
         mMock = new MockHttpStack(mContext, aRoutesXml);
     }
 
-    @Provides @BaseUrl String provideBase() {
-        return mServers.get(mCurrentKey);
+    @Provides @BaseUrl String provideBase(EnvMap aMap) {
+        return aMap.get(DEFAULT_URL);
+    }
+
+    @Provides EnvMap provideUrls() {
+        return mEnvironments.get(mCurrentKey);
     }
 
     @Provides RequestQueue providesQueue() {
         return mVolley;
     }
 
-    @Provides ServerChanger providesChanger() {
-        return new ServerChanger(this);
+    @Provides EnvSwitcher providesChanger() {
+        return new EnvSwitcher(this);
     }
 
-    void setServer(String aType) {
+    void setEnv(String aType) {
         if (aType != null && !aType.equals(mCurrentKey) 
-                && mServers.keySet().contains(aType)) {
+                && mEnvironments.keySet().contains(aType)) {
             mCurrentKey = aType;
             
             if (aType.equals(MOCK)) {
@@ -70,30 +87,50 @@ public class VolleyBall {
         }
     }
 
-    Set<String> getServerTypes() {
-        return mServers.keySet();
+    Set<String> getEnvTypes() {
+        return mEnvironments.keySet();
     }
 
-    public static class ServerChanger {
+    public static class EnvSwitcher {
         private VolleyBall mModule;
-        public ServerChanger(VolleyBall aManager) {
+        public EnvSwitcher(VolleyBall aManager) {
             mModule = aManager;
         }
 
-        public void changeMocks(int aRes) {
-            mModule.addMock(aRes);
+        public void changeEnv(String aKey) {
+            mModule.setEnv(aKey);
         }
 
-        public void changeServer(String aKey) {
-            mModule.setServer(aKey);
-        }
-
-        public String currentServer() {
+        public String currentEnv() {
             return mModule.mCurrentKey;
         }
 
-        public Set<String> getServerTypes() {
-            return mModule.getServerTypes();
+        public Set<String> getEnvTypes() {
+            return mModule.getEnvTypes();
+        }
+    }
+
+    public static class EnvMap extends HashMap<String, String> {}
+
+    public static class MockMap extends EnvMap {
+        public String get(String aKey) {
+            return MOCK_BASE;
+        }
+    }
+
+    public static class EnvBuilder {
+        public EnvMap map;
+        public EnvBuilder addServer(String aKey, String aUrl) {
+            if (map.size() == 0) {
+                map.put(DEFAULT_URL, aUrl);
+            }
+            map.put(aKey, aUrl);
+            return this;
+        }
+
+        public EnvBuilder addServer(String aUrl) {
+            map.put(DEFAULT_URL, aUrl);
+            return this;
         }
     }
 }

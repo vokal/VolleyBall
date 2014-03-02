@@ -83,5 +83,6 @@ public class MainActivity extends ActionBarActivity {
         mResponse.setText("New Server: " + aEvent.server);
         // Maybe save setting?
         ((TestApp) getApplication()).graph().inject(this);
+        android.util.Log.d("MainActivity", "REQ: " + mVolley);
     }
 }

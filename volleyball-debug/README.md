@@ -29,8 +29,8 @@ Create Object Graph
 
 ~~~~java
     VolleyBall network = new VolleyBall(this);
-    network.addServer("Production", "http://www.google.com/");
-    network.addServer("Staging", "http://staging.google.com/");
+    network.forEnv("Production").addServer"http://www.google.com/");
+    network.forEnv("Staging").addServer("http://staging.google.com/");
     network.addMock(R.xml.routes);
 
     mObjectGraph = ObjectGraph.create(new OttoBusModule(), new

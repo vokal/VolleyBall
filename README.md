@@ -23,9 +23,8 @@ public class MyApplication {
         super.onCreate();
 
         VolleyBall network = new VolleyBall(this);
-        network.addServer("Local", "http://10.1.10.176/");
-        network.addServer("Staging", "http://staging.myapp.com/")
-        network.addServer("Production", "https://www.myapp.com/")
+        network.forEnv("Production").addServer"http://www.google.com/");
+        network.forEnv("Staging").addServer("http://staging.google.com/");
         network.addMocks(R.xml.routes);
 
         mObjectGraph = ObjectGraph.create(new MainModule(), network);
@@ -62,6 +61,62 @@ public class VolleyNewsFeedService implements NewsFeedService {
         ...
     }
 }
+~~~~
+
+Multple Servers per Environment
+
+~~~~java
+public class MyApplication {
+
+    public void onCreate() {
+        super.onCreate();
+
+        VolleyBall network = new VolleyBall(this);
+        network.forEnv("Production").addServer"http://www.google.com/");
+        network.forEnv("Staging").addServer("http://staging.google.com/");
+        network.addMocks(R.xml.routes);
+
+        mObjectGraph = ObjectGraph.create(new MainModule(), network);
+    }
+}
+~~~~
+
+Inject your RequestQueue and Environment
+
+~~~~java
+public class VolleyNewsFeedService implements NewsFeedService {
+    @Inject RequestQueue mRequestQueue;
+    @Inject EnvMap mMap;
+
+    public void fetchPage(int aPage) {
+        ...
+    }
+}
+~~~~
+
+OR
+
+~~~~java
+// In Module
+@Provides @Named("main") String provideMain(EnvMap aMap) {
+    return aMap.get("main");
+}
+
+@Provides @Named("twitter") String providesTwitter(EnvMap aMap) {
+    return aMap.get("twitter");
+}
+
+// In Service
+
+public class VolleyNewsFeedService implements NewsFeedService {
+    @Inject RequestQueue mRequestQueue;
+    @Inject @Named String mBaseUrl;
+
+    public void fetchPage(int aPage) {
+        ...
+    }
+}
+
 ~~~~
 
 Notes and Gotchas

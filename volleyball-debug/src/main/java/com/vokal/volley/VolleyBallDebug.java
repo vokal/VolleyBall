@@ -13,12 +13,12 @@ import javax.inject.Inject;
 
 import com.squareup.otto.Bus;
 
-import com.vokal.volley.VolleyBall.ServerChanger;
+import com.vokal.volley.VolleyBall.EnvSwitcher;
 
 public class VolleyBallDebug implements Barstool.Plugin {
 
     @Inject Bus mOtto;
-    @Inject ServerChanger mChanger;
+    @Inject EnvSwitcher mChanger;
 
     public String getTitle() {
         return "Network Settings";
@@ -36,12 +36,12 @@ public class VolleyBallDebug implements Barstool.Plugin {
 
         final Spinner spinner = (Spinner) aView.findViewById(R.id.type);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(aView.getContext(), android.R.layout.simple_list_item_1);
-        adapter.addAll(mChanger.getServerTypes());
+        adapter.addAll(mChanger.getEnvTypes());
         spinner.setAdapter(adapter);
 
         int count = 0;
-        for (String i : mChanger.getServerTypes()) {
-            if (i.equals(mChanger.currentServer())) {
+        for (String i : mChanger.getEnvTypes()) {
+            if (i.equals(mChanger.currentEnv())) {
                 ((Spinner) aView).setSelection(count);
                 break;
             }
@@ -53,8 +53,8 @@ public class VolleyBallDebug implements Barstool.Plugin {
                 public void onItemSelected(AdapterView<?> parent, View view, 
                     int pos, long id) {
                     String type = (String) spinner.getAdapter().getItem(pos);
-                    if (!type.equals(mChanger.currentServer())) {
-                        mChanger.changeServer(type);
+                    if (!type.equals(mChanger.currentEnv())) {
+                        mChanger.changeEnv(type);
                         mOtto.post(new Changed(type));
                     }
                 }

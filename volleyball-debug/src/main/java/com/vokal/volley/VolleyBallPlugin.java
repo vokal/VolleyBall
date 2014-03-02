@@ -6,8 +6,8 @@ import barstool.*;
 @Module(
     includes=BarstoolModule.class
 )
-public class VolleyPluginModule {
+public class VolleyBallPlugin {
     @Provides(type=Provides.Type.SET) Barstool.Plugin debugger() {
-        return new VolleyPluginModule();
+        return new VolleyBallDebug();
     }
 }

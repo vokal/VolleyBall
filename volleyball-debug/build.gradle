@@ -47,18 +47,12 @@ apply plugin: 'maven'
 apply plugin: 'signing'
 
 version = "1.0.0"
-group = "com.vokal.volley"
+group = "com.vokalinteractive"
 
 def deployRepo = sonatypeRepo
 
 /* Uncomment to deploy locally */
-deployRepo = 'file://localhost/tmp/myRepo'
-
-configurations {
-    archives {
-        extendsFrom configurations.default
-    }
-}
+// deployRepo = 'file://localhost/tmp/myRepo'
 
 signing {
     required { has("release") && gradle.taskGraph.hasTask("uploadArchives") }
