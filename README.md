@@ -72,8 +72,10 @@ public class MyApplication {
         super.onCreate();
 
         VolleyBall network = new VolleyBall(this);
-        network.forEnv("Production").addServer"http://www.google.com/");
-        network.forEnv("Staging").addServer("http://staging.google.com/");
+        network.forEnv("Production").addServer("main", "http://www.google.com/");
+        network.forEnv("Production").addServer("twitter", "http://www.twitter.com/");
+        network.forEnv("Staging").addServer("main", "http://staging.google.com/");
+        network.forEnv("Staging").addServer("twitter", "http://www.twitter.com/");
         network.addMocks(R.xml.routes);
 
         mObjectGraph = ObjectGraph.create(new MainModule(), network);
