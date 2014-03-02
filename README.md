@@ -110,7 +110,7 @@ OR
 
 public class VolleyNewsFeedService implements NewsFeedService {
     @Inject RequestQueue mRequestQueue;
-    @Inject @Named String mBaseUrl;
+    @Inject @Named("main") String mBaseUrl;
 
     public void fetchPage(int aPage) {
         ...
