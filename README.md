@@ -64,6 +64,16 @@ public class VolleyNewsFeedService implements NewsFeedService {
 }
 ~~~~
 
+Change the server and re-inject
+
+~~~~java
+public void switchToMocks() {
+    ServerChanger changer = getObjectGraph().get(ServerChanger.class);
+    changer.changeServer(VolleyBall.MOCK);
+    getObjectGraph().inject(mNewsFeedService);
+}
+~~~~
+
 Notes and Gotchas
 ----
 
