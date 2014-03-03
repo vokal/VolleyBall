@@ -17,9 +17,9 @@ Usage
 Create your module
 
 ~~~~java
-public class MyApplication {
+public class MyApplication extends Application {
 
-    public void onCreate() {
+    @Override public void onCreate() {
         super.onCreate();
 
         VolleyBall network = new VolleyBall(this);
@@ -74,13 +74,13 @@ public void switchToMocks() {
 }
 ~~~~
 
-Multple Servers per Environment
+Multiple Servers per Environment
 ------
 
 ~~~~java
-public class MyApplication {
+public class MyApplication extends Application {
 
-    public void onCreate() {
+    @Override public void onCreate() {
         super.onCreate();
 
         VolleyBall network = new VolleyBall(this);
