@@ -28,8 +28,7 @@ public class TestApp extends Application {
         module.forEnv("Staging").addServer("http://staging.google.com/");
         module.addMock(R.xml.routes);
 
-        mObjectGraph = ObjectGraph.create(new DummyModule(), new VolleyBallPlugin(), module);
-        
+        mObjectGraph = ObjectGraph.create(new DummyModule(), module, new VolleyBallPlugin());
     }
 
     public ObjectGraph graph() {
@@ -38,10 +37,7 @@ public class TestApp extends Application {
 
     @Module(
         complete=false,
-        injects={
-            MainActivity.class,
-            VolleyBallDebug.class
-        }
+        injects=MainActivity.class
     )
     public static class DummyModule {
         @Provides @Singleton Bus ottoBus() {

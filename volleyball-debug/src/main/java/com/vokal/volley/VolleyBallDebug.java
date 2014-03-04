@@ -27,22 +27,17 @@ public class VolleyBallDebug implements Barstool.Plugin {
     public View getView(Context aContext, ViewGroup aParent) {
         LayoutInflater inflater = LayoutInflater.from(aContext);
         View view = inflater.inflate(R.layout.barstool, aParent, false);
-        return view;
-    }
 
-    public void bindView(View aView, ObjectGraph aGraph) {
+        final Spinner spinner = (Spinner) view.findViewById(R.id.type);
 
-        aGraph.inject(this);
-
-        final Spinner spinner = (Spinner) aView.findViewById(R.id.type);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(aView.getContext(), android.R.layout.simple_list_item_1);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(aContext, android.R.layout.simple_list_item_1);
         adapter.addAll(mChanger.getEnvTypes());
         spinner.setAdapter(adapter);
 
         int count = 0;
         for (String i : mChanger.getEnvTypes()) {
             if (i.equals(mChanger.currentEnv())) {
-                ((Spinner) aView).setSelection(count);
+                spinner.setSelection(count);
                 break;
             }
             count++;
@@ -63,6 +58,8 @@ public class VolleyBallDebug implements Barstool.Plugin {
                     // Another interface callback
                 }
             });
+
+        return view;
     }
 
     public static class Changed {
