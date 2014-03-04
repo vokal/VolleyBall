@@ -9,15 +9,14 @@ Example Usage
 
 Create necessary modules for otto bus
 
-You must inject `VolleyBallDebug.class` with an [Otto] bus to use it
+You must inject an [Otto] bus to use this plugin
 
 ~~~~java
 
 @Module(
     complete=false,
     injects={
-        MyActivity.class,
-        VolleyBallDebug.class
+        MyActivity.class
     }
 )
 public class OttoBusModule {
