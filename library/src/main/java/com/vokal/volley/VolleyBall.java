@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.*;
 import android.widget.*;
 
+import com.android.volley.toolbox.HttpStack;
 import com.android.volley.toolbox.Volley;
 import com.android.volley.RequestQueue;
 
@@ -24,15 +25,20 @@ public class VolleyBall {
     public static final String MOCK_BASE = "http://mock/";
     public static final String MOCK = "Mock";
 
-    public Context mContext;
+    public final Context mContext;
+
     public RequestQueue mVolley;
     public String mCurrentKey;
     public Map<String, EnvMap> mEnvironments = new HashMap<String, EnvMap>();
     public MockHttpStack mMock;
 
     public VolleyBall(Context aContext) {
+        this(aContext, null);
+    }
+
+    public VolleyBall(Context aContext, HttpStack aStack) {
         mContext = aContext.getApplicationContext();
-        mVolley = Volley.newRequestQueue(mContext);
+        mVolley = Volley.newRequestQueue(mContext, aStack);
     }
 
     public EnvBuilder forEnv(String aKey) {
