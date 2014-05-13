@@ -13,7 +13,7 @@ import butterknife.*;
 
 import com.android.volley.RequestQueue;
 import com.vokal.volley.BaseUrl;
-import com.vokal.volley.VolleyBallDebug;
+import com.vokal.volley.debug.VolleyBallDebug;
 
 import com.squareup.otto.*;
 

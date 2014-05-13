@@ -12,8 +12,8 @@ import dagger.*;
 import barstool.*;
 
 import com.vokal.volley.VolleyBall;
-import com.vokal.volley.VolleyBallDebug;
-import com.vokal.volley.VolleyBallPlugin;
+import com.vokal.volley.debug.VolleyBallDebug;
+import com.vokal.volley.debug.VolleyBallPlugin;
 
 public class TestApp extends Application {
 

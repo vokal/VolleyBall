@@ -4,6 +4,8 @@ A plugin for use with [VolleyBall](../README.md) and Bill Best's [Barstool] tool
 
 ![Imgur](http://i.imgur.com/tkRzl7Ol.png)
 
+*NOTE* package has changed to `com.vokal.volley.debug`
+
 Example Usage
 ----
 
