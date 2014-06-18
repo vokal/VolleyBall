@@ -1,0 +1,57 @@
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+version = "1.1.3"
+group = "com.vokalinteractive"
+
+def deployRepo = sonatypeRepo
+
+/* Uncomment to deploy locally */
+// deployRepo = 'file://localhost/tmp/myRepo'
+
+signing {
+    required { has("release") && gradle.taskGraph.hasTask("uploadArchives") }
+    sign configurations.archives
+}
+
+uploadArchives {
+    configuration = configurations.archives
+    repositories.mavenDeployer {
+        beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+        repository(url: deployRepo) {
+            authentication(userName: sonatypeUsername,
+                    password: sonatypePassword)
+        }
+
+        pom.project {
+            artifactId 'volleyball'
+            name 'Volley Dagger Module'
+            packaging 'aar'
+            description 'A drop in volley module for dagger'
+            url 'https://github.com/vokalinteractive/VolleyBall'
+
+            scm {
+                url 'scm:git@github.com:vokalinteractive/VolleyBall.git'
+                connection 'scm:git@github.com:vokalinteractive/VolleyBall.git'
+                developerConnection 'scm:git@github.com:vokalinteractive/VolleyBall.git'
+            }
+
+            licenses {
+                license {
+                    name 'MIT'
+                    url 'http://opensource.org/licenses/MIT'
+                    distribution 'repo'
+                }
+            }
+
+            developers {
+                developer {
+                    id 'wmbest2'
+                    name 'William Best'
+                    email 'wmbest2@gmail.com'
+                }
+            }
+        }
+    }
+}
