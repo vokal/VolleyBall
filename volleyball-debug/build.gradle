@@ -44,4 +44,5 @@ android {
 }
 
 if (hasProperty('sonatypeRepo')) {
+    apply from: 'upload.gradle'
 }
