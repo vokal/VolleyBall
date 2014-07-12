@@ -26,12 +26,12 @@ public class VolleyBall {
     public static final String MOCK = "Mock";
 
     public final Context mContext;
+    public final HttpStack mStack;
 
     public RequestQueue mVolley;
     public String mCurrentKey;
     public Map<String, EnvMap> mEnvironments = new HashMap<String, EnvMap>();
     public MockHttpStack mMock;
-    private HttpStack mStack;
 
     public VolleyBall(Context aContext) {
         this(aContext, null);
