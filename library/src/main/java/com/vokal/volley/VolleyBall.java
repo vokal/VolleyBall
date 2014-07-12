@@ -31,6 +31,7 @@ public class VolleyBall {
     public String mCurrentKey;
     public Map<String, EnvMap> mEnvironments = new HashMap<String, EnvMap>();
     public MockHttpStack mMock;
+    private HttpStack mStack;
 
     public VolleyBall(Context aContext) {
         this(aContext, null);
@@ -38,6 +39,7 @@ public class VolleyBall {
 
     public VolleyBall(Context aContext, HttpStack aStack) {
         mContext = aContext.getApplicationContext();
+        mStack = aStack;
         mVolley = Volley.newRequestQueue(mContext, aStack);
     }
 
@@ -88,7 +90,7 @@ public class VolleyBall {
             if (aType.equals(MOCK)) {
                 mVolley = Volley.newRequestQueue(mContext, mMock);
             } else {
-                mVolley = Volley.newRequestQueue(mContext);
+                mVolley = Volley.newRequestQueue(mContext, mStack);
             }
         }
     }
