@@ -26,6 +26,7 @@ public class VolleyBall {
     public static final String MOCK = "Mock";
 
     public final Context mContext;
+    public final HttpStack mStack;
 
     public RequestQueue mVolley;
     public String mCurrentKey;
@@ -38,6 +39,7 @@ public class VolleyBall {
 
     public VolleyBall(Context aContext, HttpStack aStack) {
         mContext = aContext.getApplicationContext();
+        mStack = aStack;
         mVolley = Volley.newRequestQueue(mContext, aStack);
     }
 
@@ -88,7 +90,7 @@ public class VolleyBall {
             if (aType.equals(MOCK)) {
                 mVolley = Volley.newRequestQueue(mContext, mMock);
             } else {
-                mVolley = Volley.newRequestQueue(mContext);
+                mVolley = Volley.newRequestQueue(mContext, mStack);
             }
         }
     }

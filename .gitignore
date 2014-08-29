@@ -31,3 +31,4 @@ proguard/
 .swp
 .gradle/
 */build
+build/
